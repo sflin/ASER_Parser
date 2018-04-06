@@ -17,7 +17,9 @@ public class Parser {
 		ReadingArchive ra = null;
 		try {
 			ra = new ReadingArchive(f);
-			while (ra.hasNext()) {
+			int counter = 0;
+			while (ra.hasNext()) {// && counter < 1) {
+				counter += 1;
 				Context ctx = ra.getNext(Context.class);
 				ctx.getSST().accept(new InvocationVisitor(), null);
 			}
