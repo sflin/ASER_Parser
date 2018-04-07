@@ -105,14 +105,14 @@ public class Main {
 //					System.out.println(((InvocationExpression) expr).getMethodName() + "");	
 					IMethodName met = ((InvocationExpression) expr).getMethodName();
 //					System.out.println("\nFullName: " + met.getFullName()); 
-					if(met.getFullName().contains(".ctor")) {
-						String tmp = met.getDeclaringType().getName() + "(";
+					if(met.isConstructor()) {
+						String tmp = met.getDeclaringType().getFullName() + "(";
 //						System.out.print("new " + met.getDeclaringType().getName() + "(");
 						Iterator<IParameterName> iter = met.getParameters().iterator();
 						while(iter.hasNext()) {
 							IParameterName param = iter.next();
 //							System.out.print(param.getValueType().getName() + " " + param.getName());
-							tmp += param.getValueType().getName() + " " + param.getName();
+							tmp += param.getValueType().getFullName() + " " + param.getName();
 							if(iter.hasNext()) {
 //								System.out.print(", ");
 								tmp += ", ";
@@ -132,12 +132,12 @@ public class Main {
 							// System.out.println("\nName: " + met.getName());
 							// System.out.print(met.getDeclaringType().getName() + "." +
 							// met.getFullName()+"("); // getReturnType().getFullName()
-							String tmp = met.getDeclaringType().getName() + "." + met.getName() + "(";
+							String tmp = met.getDeclaringType().getFullName() + "." + met.getName() + "(";
 							Iterator<IParameterName> iter = met.getParameters().iterator();
 							while (iter.hasNext()) {
 								IParameterName param = iter.next();
 								// System.out.print(param.getValueType().getFullName() + " " + param.getName());
-								tmp += param.getValueType().getName() + " " + param.getName();
+								tmp += param.getValueType().getFullName() + " " + param.getName();
 								if (iter.hasNext()) {
 									// System.out.print(", ");
 									tmp += ", ";

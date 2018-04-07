@@ -1,4 +1,4 @@
-package parser;
+package parser.model;
 
 import java.util.List;
 

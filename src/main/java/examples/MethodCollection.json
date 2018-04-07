@@ -1,0 +1,130 @@
+{
+	"fullname": "RazorEngine.Compilation.ImpromptuInterface.Optimization.InvokeHelper",
+	"methods": [
+		{
+			"name": "RazorEngine.Compilation.ImpromptuInterface.Optimization.InvokeHelper.CreateCallSite(System.Type delegateType, System.Type specificBinderType, System.Int32 knownType, RazorEngine.Compilation.ImpromptuInterface.Optimization.InvokeHelper+LazyBinder binder, RazorEngine.Compilation.ImpromptuInterface.String_OR_InvokeMemberName name, System.Type context, System.String[] argNames, System.Boolean staticContext, System.Boolean isEvent)",
+			"isConstructor": false,
+			"count": 2
+		},
+		{
+			"name": "RazorEngine.Compilation.ImpromptuInterface.Optimization.InvokeHelper.CreateCallSite(System.Type specificBinderType, System.Int32 knownType, RazorEngine.Compilation.ImpromptuInterface.Optimization.InvokeHelper+LazyBinder binder, RazorEngine.Compilation.ImpromptuInterface.String_OR_InvokeMemberName name, System.Type context, System.String[] argNames, System.Boolean staticContext, System.Boolean isEvent)",
+			"isConstructor": false,
+			"count": 5
+		},
+		{
+			"name": "RazorEngine.Compilation.ImpromptuInterface.Optimization.InvokeHelper.InvokeMemberCallSite(System.Object target, RazorEngine.Compilation.ImpromptuInterface.String_OR_InvokeMemberName name, System.Object[] args, System.String[] tArgNames, System.Type tContext, System.Boolean tStaticContext, System.Runtime.CompilerServices.CallSite callSite)",
+			"isConstructor": false,
+			"count": 1
+		},
+		{
+			"name": "RazorEngine.Compilation.ImpromptuInterface.Optimization.InvokeHelper.InvokeDirectCallSite(System.Object target, System.Object[] args, System.String[] tArgNames, System.Type tContext, System.Boolean tStaticContext, System.Runtime.CompilerServices.CallSite callSite)",
+			"isConstructor": false,
+			"count": 1
+		},
+		{
+			"name": "RazorEngine.Compilation.ImpromptuInterface.Optimization.InvokeHelper.InvokeGetIndexCallSite(System.Object target, System.Object[] indexes, System.String[] argNames, System.Type context, System.Boolean tStaticContext, System.Runtime.CompilerServices.CallSite callSite)",
+			"isConstructor": false,
+			"count": 1
+		},
+		{
+			"name": "RazorEngine.Compilation.ImpromptuInterface.Optimization.InvokeHelper.InvokeSetIndexCallSite(System.Object target, System.Object[] indexesThenValue, System.String[] tArgNames, System.Type tContext, System.Boolean tStaticContext, System.Runtime.CompilerServices.CallSite tCallSite)",
+			"isConstructor": false,
+			"count": 1
+		},
+		{
+			"name": "RazorEngine.Compilation.ImpromptuInterface.Optimization.InvokeHelper.InvokeMemberActionCallSite(System.Object target, RazorEngine.Compilation.ImpromptuInterface.String_OR_InvokeMemberName name, System.Object[] args, System.String[] tArgNames, System.Type tContext, System.Boolean tStaticContext, System.Runtime.CompilerServices.CallSite callSite)",
+			"isConstructor": false,
+			"count": 3
+		},
+		{
+			"name": "RazorEngine.Compilation.ImpromptuInterface.Optimization.InvokeHelper.InvokeDirectActionCallSite(System.Object target, System.Object[] args, System.String[] tArgNames, System.Type tContext, System.Boolean tStaticContext, System.Runtime.CompilerServices.CallSite callSite)",
+			"isConstructor": false,
+			"count": 1
+		},
+		{
+			"name": "RazorEngine.Compilation.ImpromptuInterface.Optimization.InvokeHelper.InvokeSetCallSite(System.Object target, System.String name, System.Object value, System.Type context, System.Boolean staticContext, System.Runtime.CompilerServices.CallSite callSite)",
+			"isConstructor": false,
+			"count": 3
+		},
+		{
+			"name": "RazorEngine.Compilation.ImpromptuInterface.Optimization.InvokeHelper.InvokeGetCallSite(System.Object target, System.String name, System.Type context, System.Boolean staticContext, System.Runtime.CompilerServices.CallSite callsite)",
+			"isConstructor": false,
+			"count": 3
+		},
+		{
+			"name": "RazorEngine.Compilation.ImpromptuInterface.Optimization.InvokeHelper.InvokeIsEventCallSite(System.Object target, System.String name, System.Type tContext, System.Runtime.CompilerServices.CallSite callSite)",
+			"isConstructor": false,
+			"count": 3
+		},
+		{
+			"name": "RazorEngine.Compilation.ImpromptuInterface.Optimization.InvokeHelper.InvokeAddAssignCallSite(System.Object target, System.String name, System.Object[] args, System.String[] argNames, System.Type context, System.Boolean staticContext, System.Runtime.CompilerServices.CallSite callSiteIsEvent, System.Runtime.CompilerServices.CallSite callSiteAdd, System.Runtime.CompilerServices.CallSite callSiteGet, System.Runtime.CompilerServices.CallSite callSiteSet)",
+			"isConstructor": false,
+			"count": 1
+		},
+		{
+			"name": "RazorEngine.Compilation.ImpromptuInterface.Optimization.InvokeHelper.InvokeSubtractAssignCallSite(System.Object target, System.String name, System.Object[] args, System.String[] argNames, System.Type context, System.Boolean staticContext, System.Runtime.CompilerServices.CallSite callSiteIsEvent, System.Runtime.CompilerServices.CallSite callSiteRemove, System.Runtime.CompilerServices.CallSite callSiteGet, System.Runtime.CompilerServices.CallSite callSiteSet)",
+			"isConstructor": false,
+			"count": 1
+		},
+		{
+			"name": "RazorEngine.Compilation.ImpromptuInterface.Optimization.InvokeHelper.InvokeConvertCallSite(System.Object target, System.Boolean explict, System.Type type, System.Type context, System.Runtime.CompilerServices.CallSite callSite)",
+			"isConstructor": false,
+			"count": 1
+		},
+		{
+			"name": "RazorEngine.Compilation.ImpromptuInterface.Optimization.InvokeHelper.WrapAction(System.Object invokable, System.Int32 length)",
+			"isConstructor": false,
+			"count": 1
+		},
+		{
+			"name": "RazorEngine.Compilation.ImpromptuInterface.Optimization.InvokeHelper.WrapFunc(System.Type returnType, System.Object invokable, System.Int32 length)",
+			"isConstructor": false,
+			"count": 1
+		},
+		{
+			"name": "RazorEngine.Compilation.ImpromptuInterface.Optimization.InvokeHelper.IsActionOrFunc(System.Object target)",
+			"isConstructor": false,
+			"count": 1
+		},
+		{
+			"name": "RazorEngine.Compilation.ImpromptuInterface.Optimization.InvokeHelper.InvokeConstructorCallSite(System.Type type, System.Boolean isValueType, System.Object[] args, System.String[] argNames, System.Runtime.CompilerServices.CallSite callSite)",
+			"isConstructor": false,
+			"count": 1
+		},
+		{
+			"name": "RazorEngine.Compilation.ImpromptuInterface.Optimization.InvokeHelper.FastDynamicInvokeAction(System.Delegate del, System.Object[] args)",
+			"isConstructor": false,
+			"count": 1
+		},
+		{
+			"name": "RazorEngine.Compilation.ImpromptuInterface.Optimization.InvokeHelper.FastDynamicInvokeReturn(System.Delegate del, System.Object[] args)",
+			"isConstructor": false,
+			"count": 1
+		},
+		{
+			"name": "RazorEngine.Compilation.ImpromptuInterface.Optimization.InvokeHelper.TryDynamicCachedCallSite(RazorEngine.Compilation.ImpromptuInterface.Optimization.BinderHash hash, System.Int32 knownBinderType, System.Runtime.CompilerServices.CallSite callSite)",
+			"isConstructor": false,
+			"count": 2
+		},
+		{
+			"name": "RazorEngine.Compilation.ImpromptuInterface.Optimization.InvokeHelper.SetDynamicCachedCallSite(RazorEngine.Compilation.ImpromptuInterface.Optimization.BinderHash hash, System.Int32 knownBinderType, System.Runtime.CompilerServices.CallSite callSite)",
+			"isConstructor": false,
+			"count": 2
+		},
+		{
+			"name": "RazorEngine.Compilation.ImpromptuInterface.Optimization.InvokeHelper.GetBindingArgumentList(System.Object[] args, System.String[] argNames, System.Boolean staticContext)",
+			"isConstructor": false,
+			"count": 7
+		},
+		{
+			"name": "RazorEngine.Compilation.ImpromptuInterface.Optimization.InvokeHelper.InvokeMember(System.Runtime.CompilerServices.CallSite callsite, System.Type binderType, System.Int32 knownType, RazorEngine.Compilation.ImpromptuInterface.Optimization.InvokeHelper+LazyBinder binder, RazorEngine.Compilation.ImpromptuInterface.String_OR_InvokeMemberName name, System.Boolean staticContext, System.Type context, System.String[] argNames, System.Object target, System.Object[] args)",
+			"isConstructor": false,
+			"count": 4
+		},
+		{
+			"name": "RazorEngine.Compilation.ImpromptuInterface.Optimization.InvokeHelper.DynamicInvokeStaticMember(System.Type tReturn, System.Runtime.CompilerServices.CallSite callsite, System.Type binderType, System.Int32 knownType, RazorEngine.Compilation.ImpromptuInterface.Optimization.InvokeHelper+LazyBinder binder, System.String name, System.Boolean staticContext, System.Type context, System.String[] argNames, System.Type target, System.Object[] args)",
+			"isConstructor": false,
+			"count": 1
+		}
+	]
+}

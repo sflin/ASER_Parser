@@ -1,4 +1,4 @@
-package parser;
+package parser.model;
 
 public class Method {
 	
