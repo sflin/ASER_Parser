@@ -14,19 +14,13 @@ public class Parser {
 
 	public static void run() {
 		File f = new File("/home/selin/Documents/Contexts-170503/Antaris/RazorEngine/src/RazorEngine.sln-contexts.zip");
-		ReadingArchive ra = null;
-		try {
-			ra = new ReadingArchive(f);
-//			int counter = 0;
-			while (ra.hasNext()) {//  && counter < 5) {
-//				counter += 1;
+		try (ReadingArchive ra = new ReadingArchive(f)){
+			int counter = 0;
+			while (ra.hasNext()  && counter < 5) {
+				counter += 1;
 				Context ctx = ra.getNext(Context.class);
 				ctx.getSST().accept(new InvocationVisitor(), null);
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			ra.close();
 		}
 	}
 
