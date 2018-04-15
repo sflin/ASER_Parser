@@ -8,8 +8,8 @@ public class InvocationVisitor extends AbstractTraversingNodeVisitor<Void, Void>
 
 	FileService service;
 	
-	public InvocationVisitor() {
-		service = new FileService("/home/selin/Documents/archive");
+	public InvocationVisitor(String path) {
+		service = new FileService(path);
 	}
 	@Override
 	public Void visit(IInvocationExpression expr, Void context) {

@@ -8,18 +8,22 @@ import parser.InvocationVisitor;
 
 public class Parser {
 
+	private static final String DIR_CONTEXTS = "C:\\temp\\Contexts";
+	private static final String DIR_ARCHIVE = "C:\\temp\\MethodCollections";
 	public static void main(String[] args) {
 		run();
 	}
 
 	public static void run() {
-		File f = new File("/home/selin/Documents/Contexts-170503/Antaris/RazorEngine/src/RazorEngine.sln-contexts.zip");
-		try (ReadingArchive ra = new ReadingArchive(f)){
-			int counter = 0;
-			while (ra.hasNext()  && counter < 5) {
-				counter += 1;
-				Context ctx = ra.getNext(Context.class);
-				ctx.getSST().accept(new InvocationVisitor(), null);
+		System.out.println("Start Process");
+		for (String zip : IoHelper.findAllZips(DIR_CONTEXTS)) {
+			File f = new File(zip);
+			try (ReadingArchive ra = new ReadingArchive(f)){
+				while (ra.hasNext()) {
+					Context ctx = ra.getNext(Context.class);
+					System.out.println("Create MethodCollection for "+ctx.getSST().getEnclosingType().getName());
+					ctx.getSST().accept(new InvocationVisitor(DIR_ARCHIVE), null);
+				}
 			}
 		}
 	}

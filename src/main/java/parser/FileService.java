@@ -26,9 +26,13 @@ public class FileService implements IFileService {
 
 	public void addMethod(IMethodName method) {
 		File file = getFileByMethod(method);
+		if(!file.exists()) {
+			System.out.println("Error in method "+method.getFullName()+"\n");
+			return;
+		}
 		MethodCollection collection = getCollection(file);
 		if (collection == null) {
-			System.out.println("Error getting method-collection");
+			System.out.println("Error getting method-collection"+"\n");
 			return;
 		}
 		List<Method> methodList = collection.getMethods();
@@ -95,7 +99,7 @@ public class FileService implements IFileService {
 	}
 
 	private File getFileByMethod(IMethodName method) {
-		File file = new File(this.directory, method.getDeclaringType().getFullName() + ".json");
+		File file = new File(this.directory, method.getDeclaringType().getFullName().replace(':', ';').replace('>', '-') + ".json");
 		if (!file.exists()) {
 			initFile(file);
 		}
@@ -112,7 +116,11 @@ public class FileService implements IFileService {
 			writer.close();
 
 		} catch (IOException e) {
-			e.printStackTrace();
+			if(file.getAbsolutePath().contains("?")) {
+				System.out.println("Questionmark found in "+file.getAbsolutePath()+"\n");
+			}else {
+				e.printStackTrace();
+			}
 		}
 	}
 
