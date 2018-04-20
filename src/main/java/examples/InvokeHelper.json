@@ -1,0 +1,28 @@
+[
+	{
+		"fullname": "RazorEngine.InvokeHelper",
+		"methods": [
+			{
+				"name": "RazorEngine.InvokeHelper.CreateCallSite(Long.Parameter para)",
+				"isConstructor": false,
+				"count": 2
+			},
+			{
+				"name": "RazorEngine.InvokeHelper.CreateCallSite()",
+				"isConstructor": false,
+				"count": 5
+			}
+		]
+	},
+	{
+		"fullname": "RazorEngine.Optimization.InvokeHelper",
+		"methods": [
+			{
+				"name": "RazorEngine.Optimization.InvokeHelper.CreateCallSite(Long.Parameter para)",
+				"isConstructor": false,
+				"count": 2
+			}
+		]
+	},
+	
+]

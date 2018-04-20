@@ -6,10 +6,10 @@ import cc.kave.commons.model.ssts.impl.visitor.AbstractTraversingNodeVisitor;
 
 public class InvocationVisitor extends AbstractTraversingNodeVisitor<Void, Void> {
 
-	FileService service;
+	FileCreatorService service;
 	
 	public InvocationVisitor() {
-		service = new FileService("/home/selin/Documents/archive");
+		service = new FileCreatorService("/home/selin/Documents/archive");
 	}
 	@Override
 	public Void visit(IInvocationExpression expr, Void context) {

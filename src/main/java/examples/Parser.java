@@ -15,9 +15,7 @@ public class Parser {
 	public static void run() {
 		File f = new File("/home/selin/Documents/Contexts-170503/Antaris/RazorEngine/src/RazorEngine.sln-contexts.zip");
 		try (ReadingArchive ra = new ReadingArchive(f)){
-			int counter = 0;
-			while (ra.hasNext()  && counter < 5) {
-				counter += 1;
+			while (ra.hasNext()) {
 				Context ctx = ra.getNext(Context.class);
 				ctx.getSST().accept(new InvocationVisitor(), null);
 			}
