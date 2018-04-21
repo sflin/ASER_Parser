@@ -105,7 +105,7 @@ public class FileCreatorService implements IFileCreatorService {
 		try (InputStreamReader reader = new InputStreamReader(new FileInputStream(file), "UTF-8")) {
 			collection = new Gson().fromJson(reader, ClassCollection.class);
 			return collection;
-		} catch (Exception e) {
+		} catch(IOException e) {
 			e.printStackTrace();
 		}
 		return collection;

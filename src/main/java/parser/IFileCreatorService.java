@@ -12,6 +12,8 @@ public interface IFileCreatorService {
 	
 	String getMethodName(IMethodName method);
 	
+	ClassCollection getClassCollection(File file);
+	
 	MethodCollection getMethodCollectionByClass(String methodCollectionName, ClassCollection classCollection);
 	
 	void writeCollectionToFile(ClassCollection collection, File file);
