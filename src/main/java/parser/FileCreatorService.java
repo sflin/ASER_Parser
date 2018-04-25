@@ -12,16 +12,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Logger;
 
 import com.google.gson.Gson;
 
 import cc.kave.commons.model.naming.codeelements.IMethodName;
 import cc.kave.commons.model.naming.codeelements.IParameterName;
+import cc.kave.commons.model.naming.types.ITypeName;
 import parser.model.ClassCollection;
 import parser.model.Method;
 import parser.model.MethodCollection;
 
 public class FileCreatorService implements IFileCreatorService {
+	
+	private static Logger LOG = Logger.getLogger(FileCreatorService.class.getName());
 
 	private File directory;
 	private static boolean methodExists;
@@ -33,10 +37,10 @@ public class FileCreatorService implements IFileCreatorService {
 	}
 
 	public void addMethod(IMethodName method) {
-		File file = getFileByMethod(method);
+		File file = getFileByDeclaringType(method.getDeclaringType());
 		ClassCollection classCollection = getClassCollection(file);
 		if (classCollection == null) {
-			System.out.println("Error getting class-collection");
+			LOG.warning("Could not resolve classCollection for " + method.getFullName());
 			return;
 		}
 		MethodCollection collection = getMethodCollectionByClass(method.getDeclaringType().getFullName(), classCollection);
@@ -60,7 +64,7 @@ public class FileCreatorService implements IFileCreatorService {
 			}
 		}
 		if (!methodExists) { // generate new method-entry
-			Method newMethod = new Method(methodName, method.isConstructor(), 1);
+			Method newMethod = new Method(methodName, method.isConstructor(), false, 1);
 			methodList.add(newMethod);
 		}
 		collection.setMethods(methodList);
@@ -106,7 +110,7 @@ public class FileCreatorService implements IFileCreatorService {
 			collection = new Gson().fromJson(reader, ClassCollection.class);
 			return collection;
 		} catch(IOException e) {
-			e.printStackTrace();
+			LOG.warning("Error getting classCollection for file " + file.getName() + "! Caught an " + e.getClass().getName());
 		}
 		return collection;
 	}
@@ -117,19 +121,19 @@ public class FileCreatorService implements IFileCreatorService {
 			writer.write(new Gson().toJson(collection));
 
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOG.warning("Error writing collection to file " + file.getName() + "! Caught an " + e.getClass().getName());
 		}
 	}
 
-	public File getFileByMethod(IMethodName method) {
-		String assembly = method.getDeclaringType().getAssembly().getName();
+	public File getFileByDeclaringType(ITypeName type) {
+		String assembly = type.getAssembly().getName();
 		File assemblyFolder = new File(this.directory, assembly);
 		if (!assemblyFolder.exists()) {
 			assemblyFolder.mkdir();
 		}
-		File file = new File(assemblyFolder, method.getDeclaringType().getName() + ".json");
+		File file = new File(assemblyFolder, type.getName() + ".json");
 		if (!file.exists()) {
-			initFile(file, method.getDeclaringType().getFullName());
+			initFile(file, type.getFullName());
 		}
 		return file;
 	}
@@ -141,8 +145,52 @@ public class FileCreatorService implements IFileCreatorService {
 		try (OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(file), Charset.forName("UTF-8").newEncoder())) {
 			writer.write(new Gson().toJson(classCollection));
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOG.warning("Error init file " + file.getName() + "! Caught an " + e.getClass().getName());
 		}
+	}
+
+	public void addCastMethod(ITypeName typeName) {
+		File file = getFileByDeclaringType(typeName);
+		ClassCollection classCollection = getClassCollection(file);
+		if (classCollection == null) {
+			LOG.warning("Could not resolve classCollection for CastExpression of " + typeName.getName());
+			return;
+		}
+		MethodCollection collection = getMethodCollectionByClass(typeName.getFullName(), classCollection);
+		if (collection == null) {
+			// collection not yet existing
+			Method[] tmp = {};
+			collection = new MethodCollection(typeName.getFullName(), new ArrayList<>(Arrays.asList(tmp)));
+			classCollection.getCollections().add(collection);
+		}
+		int mcIndex = classCollection.getCollections().indexOf(collection);
+		List<Method> methodList = collection.getMethods();
+		String methodName = getCastName(typeName);
+		for (Iterator<Method> iterator = methodList.iterator(); iterator.hasNext() && !methodExists;) {
+			Method currentMethod = iterator.next();
+			if (currentMethod.getName().equals(methodName)) {
+				// method already exists in file: increase its counter and replace list-entry
+				int index = methodList.indexOf(currentMethod);
+				currentMethod.setCount(currentMethod.getCount() + 1);
+				methodList.set(index, currentMethod);
+				methodExists = true;
+			}
+		}
+		if (!methodExists) { // generate new method-entry
+			Method newMethod = new Method(methodName, false, true, 1);
+			methodList.add(newMethod);
+		}
+		collection.setMethods(methodList);
+		List<MethodCollection> methodCollectionList = classCollection.getCollections();
+		methodCollectionList.set(mcIndex, collection);
+		classCollection.setCollections(methodCollectionList);
+		writeCollectionToFile(classCollection, file);
+		methodExists = false;
+	}
+
+	public String getCastName(ITypeName typeName) {
+		String name = "(" + typeName.getFullName() + ") object";
+		return name;
 	}
 
 }

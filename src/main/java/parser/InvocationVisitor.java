@@ -9,12 +9,14 @@ public class InvocationVisitor extends AbstractTraversingNodeVisitor<Void, Void>
 	FileCreatorService service;
 	
 	public InvocationVisitor() {
-		service = new FileCreatorService("/home/selin/Documents/archive");
+		service = new FileCreatorService("/home/selin/archive");
 	}
 	@Override
 	public Void visit(IInvocationExpression expr, Void context) {
 		IMethodName method = expr.getMethodName();
-		service.addMethod(method);
+		if(!method.getName().equals("???")) {
+			service.addMethod(method);
+		}
 		return null;
 	}
 }

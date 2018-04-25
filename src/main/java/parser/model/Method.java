@@ -4,11 +4,13 @@ public class Method {
 	
 	private String name;
 	private boolean isConstructor;
+	private boolean isCast;
 	private Integer count;
 	
-	public Method(String name, boolean isConstructor, int count) {
+	public Method(String name, boolean isConstructor, boolean isCast, int count) {
 		this.name = name;
 		this.isConstructor = isConstructor;
+		this.isCast = isCast;
 		this.count = count;
 	}
 	public String getName() {
@@ -28,5 +30,11 @@ public class Method {
 	}
 	public void setCount(int count) {
 		this.count = count;
+	}
+	public boolean isCast() {
+		return isCast;
+	}
+	public void setCast(boolean isCast) {
+		this.isCast = isCast;
 	}
 }

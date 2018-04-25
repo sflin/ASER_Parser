@@ -1,6 +1,7 @@
 package parser;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -19,15 +20,17 @@ import org.junit.Test;
 import com.google.gson.Gson;
 
 import cc.kave.commons.model.naming.impl.v0.codeelements.MethodName;
+import cc.kave.commons.model.naming.impl.v0.types.TypeName;
 import parser.model.ClassCollection;
 import parser.model.MethodCollection;
 
 public class FileCreatorServiceTest {
 	
-	public MethodName method;
-	public MethodName constructor;
-	public ClassCollection classCollection;
-	public FileCreatorService fcs;
+	private MethodName method;
+	private MethodName constructor;
+	private TypeName typeName;
+	private ClassCollection classCollection;
+	private FileCreatorService fcs;
 	
 	@Before
 	public void setup() throws UnsupportedEncodingException, FileNotFoundException, IOException {
@@ -37,6 +40,7 @@ public class FileCreatorServiceTest {
 		}
 		method = new MethodName("0M:static [p:string] [p:string].Format([p:string] format, [p:object] arg0, [p:object] arg1)");
 		constructor = new MethodName("0M:[p:void] [System.Runtime.Serialization.Formatters.Binary.BinaryFormatter, mscorlib, 4.0.0.0]..ctor()");
+		typeName = new TypeName("0T:System.Drawing.Bitmap, System.Drawing, 4.0.0.0"); 
 	}
 
 	@Test
@@ -51,8 +55,56 @@ public class FileCreatorServiceTest {
 			assertEquals(expectedName, actualName);
 			Integer actualCount = testCollection.getCollections().get(0).getMethods().get(0).getCount();
 			assertEquals(new Integer(1), actualCount);
+			boolean isCast = testCollection.getCollections().get(0).getMethods().get(0).isCast();
+			assertFalse(isCast);
+			boolean isConstructor = testCollection.getCollections().get(0).getMethods().get(0).isConstructor();
+			assertFalse(isConstructor);
 		}
 		fcs.addMethod(method);
+		try (InputStreamReader reader = new InputStreamReader(new FileInputStream(testFile), "UTF-8")) {
+			ClassCollection testCollection = new Gson().fromJson(reader, ClassCollection.class);
+			Integer actualCount = testCollection.getCollections().get(0).getMethods().get(0).getCount();
+			assertEquals(new Integer(2), actualCount);
+		}
+	}
+
+	@Test
+	public void testAddConstructor() throws UnsupportedEncodingException, FileNotFoundException, IOException {
+		fcs.addMethod(constructor);
+		File testFile = new File("src/test/java/parser/testarchive/mscorlib/BinaryFormatter.json");
+		assertTrue(testFile.exists());
+		try (InputStreamReader reader = new InputStreamReader(new FileInputStream(testFile), "UTF-8")) {
+			ClassCollection testCollection = new Gson().fromJson(reader, ClassCollection.class);
+			String actualName = testCollection.getCollections().get(0).getMethods().get(0).getName();
+			String expectedName = "System.Runtime.Serialization.Formatters.Binary.BinaryFormatter()";
+			assertEquals(expectedName, actualName);
+			Integer actualCount = testCollection.getCollections().get(0).getMethods().get(0).getCount();
+			assertEquals(new Integer(1), actualCount);
+			boolean isCast = testCollection.getCollections().get(0).getMethods().get(0).isCast();
+			assertFalse(isCast);
+			boolean isConstructor = testCollection.getCollections().get(0).getMethods().get(0).isConstructor();
+			assertTrue(isConstructor);
+		}
+	}
+	
+	@Test
+	public void testAddCastMethod() throws UnsupportedEncodingException, FileNotFoundException, IOException {
+		fcs.addCastMethod(typeName);
+		File testFile = new File("src/test/java/parser/testarchive/System.Drawing/Bitmap.json");
+		assertTrue(testFile.exists());
+		try (InputStreamReader reader = new InputStreamReader(new FileInputStream(testFile), "UTF-8")) {
+			ClassCollection testCollection = new Gson().fromJson(reader, ClassCollection.class);
+			String actualName = testCollection.getCollections().get(0).getMethods().get(0).getName();
+			String expectedName = "(0T:System.Drawing.Bitmap) object";
+			assertEquals(expectedName, actualName);
+			Integer actualCount = testCollection.getCollections().get(0).getMethods().get(0).getCount();
+			assertEquals(new Integer(1), actualCount);
+			boolean isCast = testCollection.getCollections().get(0).getMethods().get(0).isCast();
+			assertTrue(isCast);
+			boolean isConstructor = testCollection.getCollections().get(0).getMethods().get(0).isConstructor();
+			assertFalse(isConstructor);
+		}
+		fcs.addCastMethod(typeName);
 		try (InputStreamReader reader = new InputStreamReader(new FileInputStream(testFile), "UTF-8")) {
 			ClassCollection testCollection = new Gson().fromJson(reader, ClassCollection.class);
 			Integer actualCount = testCollection.getCollections().get(0).getMethods().get(0).getCount();
@@ -75,8 +127,6 @@ public class FileCreatorServiceTest {
 		ClassCollection testClassCollection = fcs.getClassCollection(new File("src/test/java/parser/TestFile.json"));
 		assertNotNull(testClassCollection);
 		assertEquals(testClassCollection.getClass(), ClassCollection.class);
-//		assertThrows(FileNotFoundException.class, () -> fcs.getClassCollection(new File("src/test/java/parser/NotExistingFile.json")));
-//		assertThrows(IOException.class, () -> fcs.getClassCollection(new File("src/test/java/parser/TestContext.json")));
 	}
 
 	@Test
@@ -97,10 +147,10 @@ public class FileCreatorServiceTest {
 	
 	@Test
 	public void testGetFileByMethod() {
-		File testFile = fcs.getFileByMethod(method);
+		File testFile = fcs.getFileByDeclaringType(method.getDeclaringType());
 		assertEquals("string.json",testFile.getName());
 		assertEquals("mscorlib", testFile.getParentFile().getName());
-		File secondTestFile = fcs.getFileByMethod(method);
+		File secondTestFile = fcs.getFileByDeclaringType(method.getDeclaringType());
 		assertEquals("string.json", secondTestFile.getName());
 		assertEquals("mscorlib", secondTestFile.getParentFile().getName());
 	}
@@ -120,7 +170,10 @@ public class FileCreatorServiceTest {
 		new File("src/test/java/parser/NewFile.json").delete();
 		new File("src/test/java/parser/Output.json").delete();
 		new File("src/test/java/parser/testarchive/mscorlib/string.json").delete();
+		new File("src/test/java/parser/testarchive/mscorlib/BinaryFormatter.json").delete();
+		new File("src/test/java/parser/testarchive/System.Drawing/Bitmap.json").delete();
 		new File("src/test/java/parser/testarchive/mscorlib").delete();
+		new File("src/test/java/parser/testarchive/System.Drawing").delete();
 		new File("src/test/java/parser/testarchive").delete();
 	}
 
