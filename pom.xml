@@ -41,7 +41,7 @@
 
   <groupId>ASER_Paser</groupId>
   <artifactId>ASER_Parser</artifactId>
-  <version>0.1</version>
+  <version>0.3</version>
   <name>ASER_Parser</name>
   <description>ASER_Parser</description>
   <dependencies>
