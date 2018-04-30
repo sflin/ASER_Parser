@@ -8,6 +8,8 @@ import parser.CastVisitor;
 import parser.InvocationVisitor;
 
 public class Parser {
+	
+	private static final String DIR_ARCHIVE = System.getProperty("user.home") + File.separator + "archive";
 
 	public static void main(String[] args) {
 		run(args[0]);
@@ -18,8 +20,8 @@ public class Parser {
 		try (ReadingArchive ra = new ReadingArchive(f)){
 			while (ra.hasNext()){ 
 				Context ctx = ra.getNext(Context.class);
-				ctx.getSST().accept(new CastVisitor(), null);
-				ctx.getSST().accept(new InvocationVisitor(), null);
+				ctx.getSST().accept(new CastVisitor(DIR_ARCHIVE), null);
+				ctx.getSST().accept(new InvocationVisitor(DIR_ARCHIVE), null);
 			}
 		}
 	}

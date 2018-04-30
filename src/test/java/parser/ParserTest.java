@@ -30,7 +30,7 @@ public class ParserTest {
 		assertTrue(archive.exists());
 		assertTrue(archive.isDirectory());
 		File[] files = archive.listFiles();
-		assertEquals(files.length, 3);
+		assertEquals(files.length, 5);
 	}
 	
 	@After

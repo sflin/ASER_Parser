@@ -7,8 +7,8 @@ public class CastVisitor extends AbstractTraversingNodeVisitor<Void, Void> {
 
 	FileCreatorService service;
 
-	public CastVisitor() {
-		service = new FileCreatorService(System.getProperty("user.home") + "/archive");
+	public CastVisitor(String path) {
+		service = new FileCreatorService(path);
 	}
 
 	@Override

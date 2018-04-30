@@ -8,8 +8,8 @@ public class InvocationVisitor extends AbstractTraversingNodeVisitor<Void, Void>
 
 	FileCreatorService service;
 	
-	public InvocationVisitor() {
-		service = new FileCreatorService(System.getProperty("user.home") + "/archive");
+	public InvocationVisitor(String path) {
+		service = new FileCreatorService(path);
 	}
 	@Override
 	public Void visit(IInvocationExpression expr, Void context) {
