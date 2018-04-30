@@ -16,10 +16,8 @@ public class Parser {
 	public static void run(String contextArchive) {
 		File f = new File(contextArchive);
 		try (ReadingArchive ra = new ReadingArchive(f)){
-			int counter = 0;
-			while (ra.hasNext() && counter < 15) {
+			while (ra.hasNext()){ 
 				Context ctx = ra.getNext(Context.class);
-				counter += 1;
 				ctx.getSST().accept(new CastVisitor(), null);
 				ctx.getSST().accept(new InvocationVisitor(), null);
 			}

@@ -108,7 +108,6 @@ public class FileCreatorService implements IFileCreatorService {
 		ClassCollection collection = null;
 		try (InputStreamReader reader = new InputStreamReader(new FileInputStream(file), "UTF-8")) {
 			collection = new Gson().fromJson(reader, ClassCollection.class);
-			return collection;
 		} catch(IOException e) {
 			LOG.warning("Error getting classCollection for file " + file.getName() + "! Caught an " + e.getClass().getName());
 		}
