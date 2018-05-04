@@ -1,11 +1,10 @@
-package examples;
+package parser;
 
 import java.io.File;
 
 import cc.kave.commons.model.events.completionevents.Context;
 import cc.kave.commons.utils.io.ReadingArchive;
-import parser.CastVisitor;
-import parser.InvocationVisitor;
+import parser.visitor.ContextVisitor;
 
 public class Parser {
 	
@@ -18,10 +17,11 @@ public class Parser {
 	public static void run(String contextArchive) {
 		File f = new File(contextArchive);
 		try (ReadingArchive ra = new ReadingArchive(f)){
-			while (ra.hasNext()){ 
+//			int counter = 0;
+			while (ra.hasNext()) {// && counter < 5){ 
 				Context ctx = ra.getNext(Context.class);
-				ctx.getSST().accept(new CastVisitor(DIR_ARCHIVE), null);
-				ctx.getSST().accept(new InvocationVisitor(DIR_ARCHIVE), null);
+//				counter +=1;
+				ctx.getSST().accept(new ContextVisitor(DIR_ARCHIVE), null);
 			}
 		}
 	}

@@ -1,21 +1,16 @@
-package parser;
+package parser.addition;
 
 import java.io.File;
 
-import cc.kave.commons.model.naming.codeelements.IMethodName;
 import cc.kave.commons.model.naming.types.ITypeName;
 import parser.model.ClassCollection;
 import parser.model.MethodCollection;
 
-public interface IFileCreatorService {
+public interface IMethodAdder {
 
-	void addMethod(IMethodName method);
+	void addMethod(Object object);
 	
-	void addCastMethod(ITypeName typeName);
-	
-	String getMethodName(IMethodName method);
-	
-	String getCastName(ITypeName typeName);
+	String getName(Object object);
 	
 	ClassCollection getClassCollection(File file);
 	

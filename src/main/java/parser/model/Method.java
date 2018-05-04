@@ -3,14 +3,12 @@ package parser.model;
 public class Method {
 	
 	private String name;
-	private boolean isConstructor;
-	private boolean isCast;
+	private String type;
 	private Integer count;
 	
-	public Method(String name, boolean isConstructor, boolean isCast, int count) {
+	public Method(String name, String type, int count) {
 		this.name = name;
-		this.isConstructor = isConstructor;
-		this.isCast = isCast;
+		this.type = type;
 		this.count = count;
 	}
 	public String getName() {
@@ -19,22 +17,16 @@ public class Method {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public boolean isConstructor() {
-		return isConstructor;
+	public String getType() {
+		return type;
 	}
-	public void setConstructor(boolean isConstructor) {
-		this.isConstructor = isConstructor;
+	public void setType(String type) {
+		this.type = type;
 	}
 	public Integer getCount() {
 		return count;
 	}
 	public void setCount(int count) {
 		this.count = count;
-	}
-	public boolean isCast() {
-		return isCast;
-	}
-	public void setCast(boolean isCast) {
-		this.isCast = isCast;
 	}
 }

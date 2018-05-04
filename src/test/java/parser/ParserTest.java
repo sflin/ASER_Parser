@@ -9,7 +9,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import examples.Parser;
+import parser.Parser;
 
 public class ParserTest {
 	
