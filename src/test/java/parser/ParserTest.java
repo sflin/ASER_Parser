@@ -1,6 +1,7 @@
 package parser;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
@@ -30,6 +31,14 @@ public class ParserTest {
 		assertTrue(archive.isDirectory());
 		File[] files = archive.listFiles();
 		assertEquals(files.length, 3);
+	}
+
+	@Test
+	public void testFailedRun() {
+		String[] invalidArgs = { contextArchive };
+		Parser.main(invalidArgs);
+		File archive = new File(path);
+		assertFalse(archive.exists());
 	}
 
 	@After
