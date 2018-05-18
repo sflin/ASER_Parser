@@ -23,7 +23,7 @@ public class ContextVisitor extends AbstractTraversingNodeVisitor<Void, Void> {
 	public Void visit(IInvocationExpression expr, Void context) {
 		adder = new SimpleMethodAdder(path);
 		IMethodName method = expr.getMethodName();
-		if (!method.getName().contains("?")) {
+		if (!method.getName().contains("?") && !method.getDeclaringType().getAssembly().isLocalProject()) {
 			adder.addMethod(method);
 		}
 		return null;
@@ -31,8 +31,8 @@ public class ContextVisitor extends AbstractTraversingNodeVisitor<Void, Void> {
 
 	@Override
 	public Void visit(ICastExpression expr, Void context) {
-		adder = new CastAdder(path);
-		if (!expr.getTargetType().getName().contains("?")) {
+		if (!expr.getTargetType().getName().contains("?") && !expr.getTargetType().getAssembly().isLocalProject()) {
+			adder = new CastAdder(path);
 			adder.addMethod(expr.getTargetType());
 		}
 		return null;
@@ -40,8 +40,10 @@ public class ContextVisitor extends AbstractTraversingNodeVisitor<Void, Void> {
 
 	@Override
 	public Void visit(IPropertyReference expr, Void context) {
-		adder = new PropertyAdder(path);
-		adder.addMethod(expr.getPropertyName());
+		if (!expr.getPropertyName().getDeclaringType().getAssembly().isLocalProject()) {
+			adder = new PropertyAdder(path);
+			adder.addMethod(expr.getPropertyName());
+		}
 		return null;
 	}
 }

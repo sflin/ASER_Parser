@@ -70,6 +70,4 @@ public class CastAdder extends MethodAdder {
 		String name = "(" + typeName.getFullName() + ") object";
 		return name;
 	}
-	
-
 }
